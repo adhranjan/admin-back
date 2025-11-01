@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { CategoryModule } from './category/category.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,7 +13,9 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forRoot('mongodb://localhost:27017/your_db_name', {
       connectionName:'admin'
     }),
-    ProductsModule],
+    ProductsModule,
+    CategoryModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

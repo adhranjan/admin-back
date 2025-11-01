@@ -1,7 +1,20 @@
 import { Prop, Schema } from '@nestjs/mongoose';
+import { v4 as uuidv4 } from 'uuid';
 import { Schema as MongooseSchema } from 'mongoose';
+
+export const BASE_STATUS = {
+  deleted: -1,
+  draft: 0,
+  live: 1,
+} as const;
+
+
+
 @Schema()
 export class BaseSchema {
+  @Prop({ default: () => uuidv4() })
+  _id: string;
+
   @Prop({ default: new Date().getTime() })
   createdTime: Date;
 
@@ -14,8 +27,8 @@ export class BaseSchema {
   @Prop({ default: 'system' })
   updatedBy: string;
 
-  @Prop({ default: "draft" })
-  status: Date;
+  @Prop({ default: BASE_STATUS.draft })
+  status: number;
   
 }
 
