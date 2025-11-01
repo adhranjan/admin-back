@@ -41,6 +41,7 @@ export class Product extends BaseSchema {
         url: { type: String },
       },
     ],
+    _id: false,
     default: [],
   })
   socialMedia: { name: string; url: string }[];

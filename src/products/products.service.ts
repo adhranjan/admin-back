@@ -17,7 +17,7 @@ export class ProductsService {
     const exists = await this.productModel.findOne({ code: createProductDto.code });
     if (exists) throw new BadRequestException('Product code already exists');
 
-    createProductDto['encryptionKey'] = randomBytes(32).toString('hex');
+    createProductDto['encryptionKey'] = randomBytes(8).toString('hex');
     console.log(createProductDto);
     const created = await this.productModel.create(createProductDto);
     return created;
@@ -34,9 +34,12 @@ export class ProductsService {
   async update(id: string, updateProductDto: UpdateProductDto) {
     const product = await this.productModel.findById(id);
     if (!product) throw new BadRequestException('Product not found');
-  
-    Object.assign(product, updateProductDto);
-    return product.save();
+    return await this.productModel.findOneAndUpdate({
+      _id: product._id
+    }, {
+      $set: updateProductDto
+    })
+
   }
     
   remove(id: string) {

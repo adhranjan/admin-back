@@ -16,7 +16,7 @@ export class UpdateProductDto {
     stopSales?: boolean;
     
     @IsOptional()
-    @IsBoolean()
+    @IsString()
     @Allow()
     name?:string;
 

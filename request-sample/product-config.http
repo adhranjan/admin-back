@@ -1,5 +1,6 @@
 # Define a variable for base URL
 @baseUrl = http://localhost:3000
+@productId = 6905cae7ad1bd284aa992433
 
 ### Create a new product
 POST {{baseUrl}}/products
@@ -7,18 +8,18 @@ Content-Type: application/json
 
 {
   "name": "Sample Product",
-  "code": "SP000002",
+  "code": "SP000007",
   "currency": "USD",
   "timeZone": "America/New_York",
   "type": "event"
 }
 
 ### Update a product
-PUT {{baseUrl}}/products/{{PRODUCT_ID}}
+PUT {{baseUrl}}/products/{{productId}}
 Content-Type: application/json
 
 {
-  "stopSales": true,
+  "stopSales": false,
   "name": "Updated Product Name",
   "bannerImage": "https://example.com/banner.jpg",
   "cardImage": "https://example.com/card.jpg",
@@ -32,7 +33,4 @@ Content-Type: application/json
 GET {{baseUrl}}/products
 
 ### Get a single product
-GET {{baseUrl}}/products/{{PRODUCT_ID}}
-
-### Delete a product
-DELETE {{baseUrl}}/products/{{PRODUCT_ID}}
+GET {{baseUrl}}/products/{{productId}}
