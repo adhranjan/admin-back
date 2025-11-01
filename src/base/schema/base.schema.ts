@@ -13,6 +13,10 @@ export class BaseSchema {
 
   @Prop({ default: 'system' })
   updatedBy: string;
+
+  @Prop({ default: "draft" })
+  status: Date;
+  
 }
 
 // Mongoose plugin function for auto-updating timestamps

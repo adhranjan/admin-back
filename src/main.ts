@@ -1,18 +1,24 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
 
+  // Use global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,               // strips unknown fields
-      forbidNonWhitelisted: true,    // throws error if unknown fields exist
-      transform: true,               // auto-transform payloads
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
     }),
   );
 
-  await app.listen(3000);
+  // Read port from env or default to 3000
+  const port = configService.get<number>('PORT') || 3000;
+  await app.listen(port);
+  console.log(`Application is running on: http://localhost:${port}`);
 }
 bootstrap();
