@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
 import { ChannelModule } from './channel/channel.module';
 import { VisibilityModule } from './visibility/visibility.module';
+import { SalesPeriodModule } from './sales-period/sales-period.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,7 +19,8 @@ import { VisibilityModule } from './visibility/visibility.module';
     ProductsModule,
     CategoryModule,
     ChannelModule,
-    VisibilityModule
+    VisibilityModule,
+    SalesPeriodModule
   ],
   controllers: [AppController],
   providers: [AppService],

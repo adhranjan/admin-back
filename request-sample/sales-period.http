@@ -1,0 +1,50 @@
+# ===============================
+# 🌐 Base URL Configuration
+# ===============================
+@baseUrl = http://localhost:4000
+@productCode = SP000007
+
+# ===============================
+# 🟢 Create a new Sales Period
+# ===============================
+POST {{baseUrl}}/{{productCode}}/salesPeriod
+Content-Type: application/json
+
+{
+"startDate": 1761934500000,
+  "endDate": 1762452900000,
+  "name": "Main Website",
+  "status": 1
+}
+
+###
+# ===============================
+# 📄 Get all Sales Periods
+# ===============================
+GET {{baseUrl}}/{{productCode}}/salesPeriod
+#####
+# ===============================
+# 📄 Get a single Sales Period
+# ===============================
+GET {{baseUrl}}/{{productCode}}/salesPeriod/0e7c76fc-55b0-45ec-b3cd-8f2d781703d3
+
+###
+# ===============================
+# ✏️ Update a Sales Period
+# ===============================
+PATCH {{baseUrl}}/{{productCode}}/salesPeriod/0e7c76fc-55b0-45ec-b3cd-8f2d781703d3
+Content-Type: application/json
+
+{
+  "name": "Updated Sales Period to may",
+  "startDate": 1762000000000,
+  "endDate": 1762600000000,
+  "status": 1
+}
+
+#####
+
+# ===============================
+# ❌ Delete a Sales Period
+# ===============================
+DELETE {{baseUrl}}/{{productCode}}/salesPeriod/0e7c76fc-55b0-45ec-b3cd-8f2d781703d3
