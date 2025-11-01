@@ -2,10 +2,10 @@ import { Prop, Schema } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 @Schema()
 export class BaseSchema {
-  @Prop({ default: Date.now })
+  @Prop({ default: new Date().getTime() })
   createdTime: Date;
 
-  @Prop({ default: Date.now })
+  @Prop({ default: new Date().getTime() })
   updatedTime: Date;
 
   @Prop({ default: 'system' })

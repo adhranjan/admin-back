@@ -4,11 +4,12 @@ import { Model } from 'mongoose';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product, ProductDocument } from './product.schema';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
+    @InjectModel(Product.name, "admin") private productModel: Model<ProductDocument>,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -16,8 +17,10 @@ export class ProductsService {
     const exists = await this.productModel.findOne({ code: createProductDto.code });
     if (exists) throw new BadRequestException('Product code already exists');
 
-    const created = new this.productModel(createProductDto);
-    return created.save();
+    createProductDto['encryptionKey'] = randomBytes(32).toString('hex');
+    console.log(createProductDto);
+    const created = await this.productModel.create(createProductDto);
+    return created;
   }
 
   findAll() {

@@ -47,11 +47,3 @@ export class Product extends BaseSchema {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
-
-// Auto-generate encryptionKey before save if not set
-ProductSchema.pre('save', function (next) {
-  if (!this.encryptionKey) {
-    this.encryptionKey = randomBytes(32).toString('hex');
-  }
-  next();
-});

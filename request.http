@@ -1,0 +1,38 @@
+# Define a variable for base URL
+@baseUrl = http://localhost:3000
+
+### Create a new product
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Sample Product",
+  "code": "SP000002",
+  "currency": "USD",
+  "timeZone": "America/New_York",
+  "type": "event"
+}
+
+### Update a product
+PUT {{baseUrl}}/products/{{PRODUCT_ID}}
+Content-Type: application/json
+
+{
+  "stopSales": true,
+  "name": "Updated Product Name",
+  "bannerImage": "https://example.com/banner.jpg",
+  "cardImage": "https://example.com/card.jpg",
+  "socialMedia": [
+    { "name": "Twitter", "url": "https://twitter.com/sample" },
+    { "name": "Facebook", "url": "https://facebook.com/sample" }
+  ]
+}
+
+### Get all products
+GET {{baseUrl}}/products
+
+### Get a single product
+GET {{baseUrl}}/products/{{PRODUCT_ID}}
+
+### Delete a product
+DELETE {{baseUrl}}/products/{{PRODUCT_ID}}
