@@ -1,0 +1,28 @@
+import { Prop, Schema } from '@nestjs/mongoose';
+import { Schema as MongooseSchema } from 'mongoose';
+@Schema()
+export class BaseSchema {
+  @Prop({ default: Date.now })
+  createdTime: Date;
+
+  @Prop({ default: Date.now })
+  updatedTime: Date;
+
+  @Prop({ default: 'system' })
+  createdBy: string;
+
+  @Prop({ default: 'system' })
+  updatedBy: string;
+}
+
+// Mongoose plugin function for auto-updating timestamps
+export function BaseSchemaPlugin(schema: MongooseSchema) {
+    schema.pre('save', function (next) {
+      const now = new Date();
+      if (!this.createdTime) this.createdTime = now;
+      this.updatedTime = now;
+      if (!this.createdBy) this.createdBy = 'system';
+      this.updatedBy = 'system';
+      next();
+    });
+  }

@@ -1,0 +1,57 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { randomBytes } from 'crypto';
+import { BaseSchema } from 'src/base/schema/base.schema';
+
+export type ProductDocument = Product & Document;
+
+@Schema({ timestamps: true })
+export class Product extends BaseSchema {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true, unique: true })
+  code: string;
+
+  @Prop({ required: true })
+  currency: string;
+
+  @Prop({ required: true })
+  timeZone: string;
+
+  @Prop({ required: true })
+  type: string;
+
+  @Prop({ required: true })
+  encryptionKey: string;
+
+  @Prop({ default: false })
+  stopSales: boolean;
+
+  @Prop({ type: String })
+  bannerImage?: string;
+
+  @Prop({ type: String })
+  cardImage?: string;
+
+  @Prop({
+    type: [
+      {
+        name: { type: String },
+        url: { type: String },
+      },
+    ],
+    default: [],
+  })
+  socialMedia: { name: string; url: string }[];
+}
+
+export const ProductSchema = SchemaFactory.createForClass(Product);
+
+// Auto-generate encryptionKey before save if not set
+ProductSchema.pre('save', function (next) {
+  if (!this.encryptionKey) {
+    this.encryptionKey = randomBytes(32).toString('hex');
+  }
+  next();
+});
