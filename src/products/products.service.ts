@@ -26,12 +26,12 @@ export class ProductsService {
     return this.productModel.find().exec();
   }
 
-  findOne(id: string) {
-    return this.productModel.findById(id).exec();
+  findOne(code: string) {
+    return this.productModel.findOne({code: code}).exec();
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
-    const product = await this.productModel.findById(id);
+  async update(code: string, updateProductDto: UpdateProductDto) {
+    const product = await this.productModel.findOne({code: code});
     if (!product) throw new BadRequestException('Product not found');
     return await this.productModel.findOneAndUpdate({
       _id: product._id

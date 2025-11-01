@@ -3,7 +3,7 @@
 @productCode = SP001
 
 # CREATE CATEGORY
-POST {{baseUrl}}/category
+POST {{baseUrl}}/{{productCode}}/category
 Content-Type: application/json
 
 {
@@ -12,23 +12,22 @@ Content-Type: application/json
   "color": "#FF0000",
   "seatType": "RS",
   "description": "Reserved seating near stage",
-  "productCode": "{{productCode}}"
 }
 
 ####
 
 # GET ALL CATEGORIES
-GET {{baseUrl}}/category
+GET {{baseUrl}}/{{productCode}}category
 ####
 
 
 # GET CATEGORY BY ID
-GET {{baseUrl}}/category/{{categoryId}}
+GET {{baseUrl}}{{productCode}}/category/{{categoryId}}
 ####
 
 
 # UPDATE CATEGORY (partial)
-PUT {{baseUrl}}/category/523f87a7-c5f6-4d7e-b88c-e6281cfa6f0f
+PUT {{baseUrl}}/{{productCode}}category/523f87a7-c5f6-4d7e-b88c-e6281cfa6f0f
 Content-Type: application/json
 
 {
@@ -39,5 +38,5 @@ Content-Type: application/json
 ####
 
 # DELETE CATEGORY
-DELETE {{baseUrl}}/category/6b365187-02ca-464a-9d07-69da13929254
+DELETE {{baseUrl}}/{{productCode}}category/6b365187-02ca-464a-9d07-69da13929254
 ####

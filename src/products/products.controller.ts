@@ -17,14 +17,14 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(id);
+  @Get(':code')
+  findOne(@Param('code') code: string) {
+    return this.productsService.findOne(code);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(id, updateProductDto);
+  @Put(':code')
+  update(@Param('code') code: string, @Body() updateProductDto: UpdateProductDto) {
+    return this.productsService.update(code, updateProductDto);
   }
 
 }

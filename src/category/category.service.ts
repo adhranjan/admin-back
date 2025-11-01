@@ -15,42 +15,44 @@ export class CategoryService {
   ) {}
 
   // Create category
-  async create(createDto: CreateCategoryDto): Promise<Category> {
+  async create(productCode: string, createDto: CreateCategoryDto): Promise<Category> {
     // Validate product exists
-    const productExists = await this.productModel.exists({ code: createDto.productCode });
+    const productExists = await this.productModel.exists({ code: productCode });
     if (!productExists) {
       throw new BadRequestException('Product does not exist');
     }
 
     const categoryExists = await this.categoryModel.exists({ 
-      productCode: createDto.productCode,
+      productCode: productCode,
       code: createDto.code
      });
     if (categoryExists) {
       throw new BadRequestException(`Category with code ${createDto.code} already exists`);
     }  
 
-  return this.categoryModel.create(createDto);
+  return this.categoryModel.create({...createDto, productCode});
 
   }
 
   // Get all categories
-  async findAll(): Promise<Category[]> {
-    return this.categoryModel.find().exec();
+  async findAll(productCode: string): Promise<Category[]> {
+    return this.categoryModel.find({
+      productCode 
+    }).exec();
   }
 
   // Get single category by id
-  async findOne(id: string): Promise<Category> {
-    const category = await this.categoryModel.findById(id).exec();
+  async findOne(productCode: string, code: string): Promise<Category> {
+    const category = await this.categoryModel.findOne({productCode, code}).exec();
     if (!category) throw new NotFoundException('Category not found');
     return category;
   }
 
   // Update category
-  async update(id: string, updateDto: UpdateCategoryDto): Promise<Category> {
+  async update(productCode: string, code: string, updateDto: UpdateCategoryDto): Promise<Category> {
     // Use $set to only update provided fields
     const updatedCategory = await this.categoryModel.findOneAndUpdate(
-      { _id: id },
+      { productCode: productCode, code:code },
       { $set: updateDto },
       { new: true }, // return the updated document
     ).exec();
@@ -64,7 +66,7 @@ export class CategoryService {
   }  
  
   // Delete category
-  async remove(id: string): Promise<Category> {
+  async remove(productCode: string,id: string): Promise<Category> {
     const category = await this.categoryModel.findById(id).exec();
     if (!category) throw new NotFoundException('Category not found');
 

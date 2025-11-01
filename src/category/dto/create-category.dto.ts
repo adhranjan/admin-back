@@ -24,8 +24,4 @@ export class CreateCategoryDto {
   @IsOptional()
   @MaxLength(100)
   description?: string;
-
-  @IsString()
-  @IsNotEmpty()
-  productCode: string;
 }
