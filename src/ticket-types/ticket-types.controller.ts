@@ -7,10 +7,12 @@ import {
   Param,
   Body,
   Put,
+  BadRequestException,
 } from '@nestjs/common';
 import { TicketTypesService } from './ticket-types.service';
 import { CreateTicketTypeDto } from './dto/create-ticket-type.dto';
 import { UpdateTicketTypeDto } from './dto/update-ticket-type.dto';
+import { PatchTicketTypesDto } from './dto/patch-ticket-type.dto';
 
 @Controller(':productCode/ticket-types')
 export class TicketTypesController {
@@ -51,6 +53,20 @@ export class TicketTypesController {
     return this.service.update(id, productCode, dto);
   }
 
+
+  @Patch(':id/sales')
+  async patchSales(
+    @Param('productCode') productCode: string,
+    @Param('id') id: string,
+    @Body() patchDto: PatchTicketTypesDto,
+  ) {
+
+    if (!patchDto.body || !patchDto.body.length) {
+      throw new BadRequestException('Body must contain at least one sales item');
+    }
+    const ticketTypes = await this.service.patchSales(productCode, id, patchDto.body);
+    return ticketTypes
+  }
   // Delete a ticket type
   @Delete(':id')
   async remove(

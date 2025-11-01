@@ -44,6 +44,23 @@ export class TicketType extends BaseSchema {
 
   @Prop({ type: Number, default: null })
   expirySpecific?: number | null;
+
+  @Prop({
+    type: [
+      {
+        channelCode: String,
+        active: Boolean,
+        salesPeriodId: String,
+      },
+    ],
+    _id: false,
+    default: [],
+  })
+  sales: {
+    channelCode: string;
+    active: boolean;
+    salesPeriodId: string;
+  }[];
 }
 
 export const TicketTypeSchema = SchemaFactory.createForClass(TicketType);

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { BASE_STATUS, BaseSchema } from 'src/base/schema/base.schema';
+import {  BaseSchema } from 'src/base/schema/base.schema';
 import { CHANNEL_CART_STATUS, CHANNEL_TYPE } from './channels.constans';
 
 export type ChannelDocument = Channel & Document;

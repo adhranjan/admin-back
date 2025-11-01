@@ -56,3 +56,33 @@ Content-Type: application/json
 # ❌ Delete a Ticket Type
 # ===============================
 DELETE {{baseUrl}}/{{productCode}}/ticket-types/{{ticketTypeId}}
+
+###
+
+# ===========================
+# PATCH Sales for Ticket Type
+# ===========================
+PATCH {{baseUrl}}/{{productCode}}/ticket-types/{{ticketTypeId}}/sales
+Content-Type: application/json
+
+{
+  "body": [
+      {
+      "action": "add",
+      "sales": {
+        "channelCode": "MAINPOOS",
+        "active": true,
+        "salesPeriodId": "d7c99d33-5acd-4c72-8d3f-0df69c7c41c7"
+      }
+    },
+    {
+      "action": "update",
+      "sales": {
+        "channelCode": "MAINPOOS",
+        "active": false,
+        "salesPeriodId": "d7c99d33-5acd-4c72-8d3f-0df69c7c41c7"
+      }
+    }
+
+  ]
+}

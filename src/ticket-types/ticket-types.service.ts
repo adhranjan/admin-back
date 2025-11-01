@@ -7,6 +7,9 @@ import { Product, ProductDocument } from 'src/products/product.schema';
 import { TicketType, TicketTypeDocument } from './ticket-types.schema';
 import { BASE_STATUS } from 'src/base/schema/base.schema';
 import { Category, CategoryDocument } from 'src/category/category.schema';
+import { PatchItemDto } from './dto/patch-ticket-type.dto';
+import { SalesPeriod } from 'src/sales-period/sales-period.schema';
+import { Channel } from 'src/channel/channel.schema';
 
 @Injectable()
 export class TicketTypesService {
@@ -14,6 +17,8 @@ export class TicketTypesService {
     @InjectModel(TicketType.name, "admin") private ticketTypeModel: Model<TicketTypeDocument>,
     @InjectModel(Product.name, "admin") private productModel: Model<ProductDocument>,
     @InjectModel(Category.name, "admin") private categoryModel: Model<CategoryDocument>,
+    @InjectModel(SalesPeriod.name, "admin") private salesPeriodModel: Model<SalesPeriod>,
+    @InjectModel(Channel.name, "admin") private channelModel: Model<Channel>,
 
     ) {}
 
@@ -58,7 +63,6 @@ export class TicketTypesService {
     if (!ticketTypeConfig) throw new NotFoundException('Ticket type not found');
 
     const cleanDto = await this.prepareTicketTypeData(productCode, updateDto, ticketTypeConfig.code);
-      console.log(cleanDto);
     const updated = await this.ticketTypeModel.findOneAndUpdate(
       { _id: id, productCode },
       cleanDto,
@@ -126,5 +130,76 @@ export class TicketTypesService {
     return cleanedData;
   }
 
+  async patchSales(productCode: string, id: string, items: PatchItemDto[]) {
+    // Get current ticket with sales
+    const ticket = await this.ticketTypeModel.findOne({ productCode, _id: id }).lean();
+    if (!ticket) throw new NotFoundException('Ticket type not found');
+
+    const channelCodes = [...new Set(items.map(i => i.sales?.channelCode).filter(Boolean))];
+    const periodIds = [...new Set(items.map(i => i.sales?.salesPeriodId).filter(Boolean))];
+  
+  
+    const channelPresence = await this.channelModel.countDocuments({
+      code: {
+        $in: channelCodes
+      }
+    });
+
+    if (channelPresence !== channelCodes.length) {
+      throw new NotFoundException('Some channels do not exist');
+    }
+  
+
+    const periodPresence = await this.salesPeriodModel.countDocuments({
+      _id: {
+        $in: periodIds
+      },
+      productCode: ticket.productCode
+    });
+    if (periodPresence !== periodIds.length) {
+      throw new NotFoundException('Some sales periods do not exist');
+    }
+  
+    // Clone existing sales array
+    let updatedSales = [...(ticket.sales as TicketType['sales'] || []).map(s => ({ ...s }))];
+    
+    for (const item of items) {
+      const { action, sales } = item;
+    
+      if (!sales && action !== 'delete') {
+        throw new BadRequestException(`Missing sales data for action '${action}'`);
+      }
+    
+      switch (action) {
+        case 'add':
+          if (!sales) break;
+          if (updatedSales.some(s => s.channelCode === sales.channelCode)) {
+            throw new BadRequestException(`Sales record exists for channel ${sales.channelCode}`);
+          }
+          updatedSales.push(sales as unknown as TicketType['sales'][0]);
+          break;
+    
+        case 'update':
+          if (!sales) break;
+          const index = updatedSales.findIndex(s => s.channelCode === sales.channelCode);
+          if (index === -1) throw new NotFoundException(`Sales record not found for channel ${sales.channelCode}`);
+          updatedSales[index] = { ...updatedSales[index], ...sales };
+          break;
+    
+        case 'delete':
+          if (!sales) throw new BadRequestException(`Missing sales data for delete action`);
+          updatedSales = updatedSales.filter(s => s.channelCode !== sales.channelCode);
+          break;
+      }
+    }
+
+    return await this.ticketTypeModel.findOneAndUpdate(
+      { _id: id},
+      { $set: { sales: updatedSales} },
+      { new: true , upsert: true}
+    ).exec();
+
+  }
+  
   
 }
