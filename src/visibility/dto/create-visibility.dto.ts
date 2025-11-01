@@ -1,5 +1,6 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsIn, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { IsRangedWith } from 'src/base/dto/range.dto';
+import { BASE_STATUS } from 'src/base/schema/base.schema';
 
 export class CreateVisibilityDto {
   @IsNumber()
@@ -14,6 +15,7 @@ export class CreateVisibilityDto {
   @IsNotEmpty()
   channelCode: string;
 
-  @IsBoolean()
-  visible: boolean;
+  @IsNumber()
+  @IsIn([BASE_STATUS.disabled, BASE_STATUS.enabled])
+  status: number;
 }

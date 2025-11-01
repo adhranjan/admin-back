@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsBoolean, IsOptional, IsNumber, IsIn, IsDefined } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsIn, IsDefined } from 'class-validator';
 import { IsRangedWith } from 'src/base/dto/range.dto';
 import { BASE_STATUS } from 'src/base/schema/base.schema';
 

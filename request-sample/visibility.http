@@ -13,7 +13,7 @@ Content-Type: application/json
   "channelCode": "{{channelCode}}",
   "startDate": 1398796800000, 
   "endDate": 1418968000000,
-  "visible": true
+  "status": 1
 }
 
 ### =========================
@@ -35,7 +35,7 @@ Content-Type: application/json
 {
   "startDate": 1698796800000,
   "endDate": 1698797800000,
-  "visible": false
+  "status": 1
 }
 
 ### =========================

@@ -15,9 +15,6 @@ export class Visibility extends BaseSchema {
 
   @Prop({ required: true })
   productCode: string;
-
-  @Prop({ required: true, default: true })
-  visible: boolean;
 }
 
 export const VisibilitySchema = SchemaFactory.createForClass(Visibility);
