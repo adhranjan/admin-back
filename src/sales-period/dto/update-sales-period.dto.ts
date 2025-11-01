@@ -10,12 +10,12 @@ export class UpdateSalesPeriodDto {
 
   @IsNumber()
   @IsOptional()
-  @IsRangedWith('endDate')
+  @IsRangedWith('startDate','endDate')
   startDate?: number;
 
   @IsNumber()
   @IsOptional()
-  @IsRangedWith('startDate')
+  @IsRangedWith('startDate','startDate')
   endDate?: number;
 
   @IsNumber()

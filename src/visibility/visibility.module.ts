@@ -12,7 +12,6 @@ import { Channel, ChannelSchema } from 'src/channel/channel.schema';
       { name: Visibility.name, schema: VisibilitySchema },
       { name: Product.name, schema: ProductSchema },
       { name: Channel.name, schema: ChannelSchema }
-    
     ], "admin")
   ],
   controllers: [VisibilityController],

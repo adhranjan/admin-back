@@ -10,12 +10,12 @@ export class CreateSalesPeriodDto {
 
   @IsNumber()
   @IsDefined()
-  @IsRangedWith('endDate')
+  @IsRangedWith('startDate','endDate')
   startDate: number;
 
   @IsNumber()
   @IsDefined()
-  @IsRangedWith('startDate')
+  @IsRangedWith('startDate','endDate')
   endDate: number;
 
   @IsNumber()

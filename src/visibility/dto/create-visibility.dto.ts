@@ -4,11 +4,11 @@ import { BASE_STATUS } from 'src/base/schema/base.schema';
 
 export class CreateVisibilityDto {
   @IsNumber()
-  @IsRangedWith('endDate')
+  @IsRangedWith('startDate','endDate')
   startDate: number;
 
   @IsNumber()
-  @IsRangedWith('startDate')
+  @IsRangedWith('startDate','endDate')
   endDate: number;
 
   @IsString()

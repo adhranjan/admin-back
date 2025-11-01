@@ -7,12 +7,12 @@ import { BASE_STATUS } from 'src/base/schema/base.schema';
 export class UpdateVisibilityDto {
   @IsNumber()
   @IsOptional()
-  @IsRangedWith('endDate')
+  @IsRangedWith('startDate','endDate')
   startDate?: number;
 
   @IsNumber()
   @IsOptional()
-  @IsRangedWith('startDate')
+  @IsRangedWith('startDate','endDate')
   endDate?: number;
 
   @IsNumber()

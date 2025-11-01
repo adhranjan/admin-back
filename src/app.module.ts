@@ -8,6 +8,7 @@ import { CategoryModule } from './category/category.module';
 import { ChannelModule } from './channel/channel.module';
 import { VisibilityModule } from './visibility/visibility.module';
 import { SalesPeriodModule } from './sales-period/sales-period.module';
+import { TicketTypesModule } from './ticket-types/ticket-types.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,7 +21,8 @@ import { SalesPeriodModule } from './sales-period/sales-period.module';
     CategoryModule,
     ChannelModule,
     VisibilityModule,
-    SalesPeriodModule
+    SalesPeriodModule,
+    TicketTypesModule
   ],
   controllers: [AppController],
   providers: [AppService],
