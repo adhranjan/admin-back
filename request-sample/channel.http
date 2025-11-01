@@ -1,0 +1,38 @@
+### 🌐 Base URL
+@baseUrl = http://localhost:4000
+
+### 🧩 Create a new channel
+POST {{baseUrl}}/channels
+Content-Type: application/json
+
+{
+  "name": "Main POS",
+  "code": "MAINPOOS",
+  "type": "POS",
+  "country": "Nepal"
+}
+
+###
+
+### 📋 Get all channels
+GET {{baseUrl}}/channels
+
+###
+
+### 🔍 Get a single channel
+GET {{baseUrl}}/channels/6016cf2e-088a-43e6-b2ff-a7e9c44233af
+
+###
+
+### ✏️ Update the channel
+PUT {{baseUrl}}/channels/6016cf2e-088a-43e6-b2ff-a7e9c44233af
+Content-Type: application/json
+
+{
+  "domain": "https://pos.example.com",
+  "status": 1,
+  "shoppingCart": 1,
+  "cartTimer": 15
+}
+
+###

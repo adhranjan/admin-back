@@ -5,6 +5,7 @@ import { ProductsModule } from './products/products.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
+import { ChannelModule } from './channel/channel.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,7 +15,8 @@ import { CategoryModule } from './category/category.module';
       connectionName:'admin'
     }),
     ProductsModule,
-    CategoryModule
+    CategoryModule,
+    ChannelModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,11 +15,6 @@ export class BaseSchema {
   @Prop({ default: () => uuidv4() })
   _id: string;
 
-  @Prop({ default: new Date().getTime() })
-  createdTime: Date;
-
-  @Prop({ default: new Date().getTime() })
-  updatedTime: Date;
 
   @Prop({ default: 'system' })
   createdBy: string;
@@ -36,8 +31,6 @@ export class BaseSchema {
 export function BaseSchemaPlugin(schema: MongooseSchema) {
     schema.pre('save', function (next) {
       const now = new Date();
-      if (!this.createdTime) this.createdTime = now;
-      this.updatedTime = now;
       if (!this.createdBy) this.createdBy = 'system';
       this.updatedBy = 'system';
       next();
