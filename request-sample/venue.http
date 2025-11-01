@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:4000
+@venueId = 4222b572-1a94-48ad-a487-4238ba9482a3
+### 🌱 Create a new venue
+POST {{baseUrl}}/venues
+Content-Type: application/json
+
+{
+  "code": "VENUE123",
+  "name": "Main Concert Hall"
+}
+
+### ✅ Get all venues
+GET {{baseUrl}}/venues
+
+### ✅ Get a single venue
+GET {{baseUrl}}/venues/{{venueId}}
+
+### ✏️ Update a venue
+PUT {{baseUrl}}/venues/{{venueId}}
+Content-Type: application/json
+
+{
+  "name": "Concert Hall",
+  "country": "Nepal",
+  "city": "New York",
+  "status": 1,
+  "address": "123 Main St, New York, NY",
+  "phone": "+1 555 123 4567",
+  "map": "https://maps.google.com/?q=123+Main+St",
+  "bannerImage": "https://example.com/banner.jpg",
+  "cardImage": "https://example.com/card.jpg"
+}
+
+### 🔑 Set the created venue ID for reuse
+> {% client.global.set("venueId", response.body._id) %}
