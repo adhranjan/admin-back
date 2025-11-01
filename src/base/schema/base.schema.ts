@@ -11,11 +11,9 @@ export const BASE_STATUS = {
 
 @Schema()
 export class BaseSchema {
-
   @Prop({ default: () => uuidv4() })
   _id: string;
-
-
+  
   @Prop({ default: 'system' })
   createdBy: string;
 

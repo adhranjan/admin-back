@@ -1,0 +1,44 @@
+@baseUrl = http://localhost:4000
+@productCode = SP000007
+@visibilityId = 5601115d-e0c1-4468-8f47-ed27fc7a8495
+@channelCode = MAINPOOS
+
+### =========================
+### CREATE VISIBILITY
+### =========================
+POST {{baseUrl}}/{{productCode}}/visibilities
+Content-Type: application/json
+
+{
+  "channelCode": "{{channelCode}}",
+  "startDate": 1398796800000, 
+  "endDate": 1418968000000,
+  "visible": true
+}
+
+### =========================
+### GET ALL VISIBILITIES FOR PRODUCT
+### =========================
+GET {{baseUrl}}/{{productCode}}/visibilities
+
+### =========================
+### GET SINGLE VISIBILITY
+### =========================
+GET {{baseUrl}}/{{productCode}}/visibilities/{{visibilityId}}
+
+### =========================
+### UPDATE VISIBILITY (partial)
+### =========================
+PUT {{baseUrl}}/{{productCode}}/visibilities/{{visibilityId}}
+Content-Type: application/json
+
+{
+  "startDate": 1698796800000,
+  "endDate": 1698797800000,
+  "visible": false
+}
+
+### =========================
+### DELETE VISIBILITY
+### =========================
+DELETE {{baseUrl}}/{{productCode}}/visibilities/{{visibilityId}}

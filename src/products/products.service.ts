@@ -18,7 +18,6 @@ export class ProductsService {
     if (exists) throw new BadRequestException('Product code already exists');
 
     createProductDto['encryptionKey'] = randomBytes(8).toString('hex');
-    console.log(createProductDto);
     const created = await this.productModel.create(createProductDto);
     return created;
   }

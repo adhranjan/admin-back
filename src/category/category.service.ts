@@ -67,7 +67,6 @@ export class CategoryService {
   async remove(id: string): Promise<Category> {
     const category = await this.categoryModel.findById(id).exec();
     if (!category) throw new NotFoundException('Category not found');
-    console.log(category);
 
     if (category.publish?.lastSuccess) {
       throw new BadRequestException('Only Draft Category can be deleted.');

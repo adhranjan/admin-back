@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
 import { ChannelModule } from './channel/channel.module';
+import { VisibilityModule } from './visibility/visibility.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,7 +17,8 @@ import { ChannelModule } from './channel/channel.module';
     }),
     ProductsModule,
     CategoryModule,
-    ChannelModule
+    ChannelModule,
+    VisibilityModule
   ],
   controllers: [AppController],
   providers: [AppService],
