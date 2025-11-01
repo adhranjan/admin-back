@@ -66,15 +66,15 @@ export class CategoryService {
   }  
  
   // Delete category
-  async remove(productCode: string,id: string): Promise<Category> {
-    const category = await this.categoryModel.findById(id).exec();
+  async remove(productCode: string,code: string): Promise<Category> {
+    const category = await this.categoryModel.findOne({code, productCode}).exec();
     if (!category) throw new NotFoundException('Category not found');
 
     if (category.publish?.lastSuccess) {
       throw new BadRequestException('Only Draft Category can be deleted.');
     }  
     await this.categoryModel.findOneAndUpdate(
-      { _id: id},
+      { _id: category._id },
       { $set: { status: BASE_STATUS.deleted} },
       { new: true }
     ).exec();

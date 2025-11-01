@@ -1,17 +1,17 @@
 @baseUrl = http://localhost:4000
 @categoryId = 6905cae7ad1bd284aa992433
-@productCode = SP001
+@productCode = SP000007
 
 # CREATE CATEGORY
 POST {{baseUrl}}/{{productCode}}/category
 Content-Type: application/json
 
 {
-  "name": "VIP Section",
-  "code": "A126",
-  "color": "#FF0000",
-  "seatType": "RS",
-  "description": "Reserved seating near stage",
+  "name": "General Admission",
+  "code": "GA18",
+  "color": "#800080",
+  "seatType": "GA",
+  "description": "All Entry"
 }
 
 ####

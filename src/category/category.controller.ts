@@ -21,25 +21,25 @@ export class CategoryController {
     return this.categoryService.findAll(productCode);
   }
 
-  @Get(':id')
+  @Get(':code')
   async findOne(
     @Param('productCode') productCode: string,
-    @Param('id') id: string,
+    @Param('code') code: string,
   ) {
-    return this.categoryService.findOne(id, productCode);
+    return this.categoryService.findOne(code, productCode);
   }
 
-  @Put(':id')
+  @Put(':code')
   update(
     @Param('productCode') productCode: string,
-    @Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
-    return this.categoryService.update(productCode, id, updateCategoryDto);
+    @Param('code') code: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+    return this.categoryService.update(productCode, code, updateCategoryDto);
   }
 
-  @Delete(':id')
+  @Delete(':code')
   remove(
     @Param('productCode') productCode: string,
-    @Param('id') id: string) {
-    return this.categoryService.remove(productCode,id);
+    @Param('code') code: string) {
+    return this.categoryService.remove(productCode,code);
   }
 }
