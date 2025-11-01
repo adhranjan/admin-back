@@ -8,7 +8,7 @@ Content-Type: application/json
 
 {
   "name": "VIP Section",
-  "code": "A125",
+  "code": "A126",
   "color": "#FF0000",
   "seatType": "RS",
   "description": "Reserved seating near stage",
@@ -28,7 +28,7 @@ GET {{baseUrl}}/category/{{categoryId}}
 
 
 # UPDATE CATEGORY (partial)
-PUT {{baseUrl}}/category/ab0ca912-2626-4d7f-b548-fb7a14cb34fc
+PUT {{baseUrl}}/category/523f87a7-c5f6-4d7e-b88c-e6281cfa6f0f
 Content-Type: application/json
 
 {

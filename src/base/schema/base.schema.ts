@@ -4,14 +4,14 @@ import { Schema as MongooseSchema } from 'mongoose';
 
 export const BASE_STATUS = {
   deleted: -1,
-  draft: 0,
-  live: 1,
+  disabled: 0,
+  enabled: 1,
 } as const;
-
 
 
 @Schema()
 export class BaseSchema {
+
   @Prop({ default: () => uuidv4() })
   _id: string;
 
@@ -27,9 +27,9 @@ export class BaseSchema {
   @Prop({ default: 'system' })
   updatedBy: string;
 
-  @Prop({ default: BASE_STATUS.draft })
+  @Prop({ default: BASE_STATUS.enabled })
   status: number;
-  
+    
 }
 
 // Mongoose plugin function for auto-updating timestamps

@@ -1,11 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { BaseSchema } from 'src/base/schema/base.schema';
+import { Publishable } from 'src/base/schema/publishable';
 
-export type CategoryDocument = Category & Document;
+
+export type CategoryDocument = Category & Document & Publishable;
 
 @Schema({ timestamps: true })
-export class Category extends BaseSchema {
+@Publishable()
+export class Category extends BaseSchema { 
   @Prop({ required: true })
   name: string;
 

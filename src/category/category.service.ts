@@ -54,11 +54,12 @@ export class CategoryService {
       { $set: updateDto },
       { new: true }, // return the updated document
     ).exec();
-  
+
     if (!updatedCategory) {
       throw new NotFoundException('Category not found');
     }
-  
+    console.log(updatedCategory.publish);
+
     return updatedCategory;
   }  
  
@@ -68,13 +69,13 @@ export class CategoryService {
     if (!category) throw new NotFoundException('Category not found');
     console.log(category);
 
-    if (category.status != BASE_STATUS.draft) {
+    if (category.publish?.lastSuccess) {
       throw new BadRequestException('Only Draft Category can be deleted.');
     }  
     await this.categoryModel.findOneAndUpdate(
       { _id: id},
       { $set: { status: BASE_STATUS.deleted} },
-      { new: true } // return the updated document
+      { new: true }
     ).exec();
 
     return category;

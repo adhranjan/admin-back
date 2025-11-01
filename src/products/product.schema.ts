@@ -2,10 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { randomBytes } from 'crypto';
 import { BaseSchema } from 'src/base/schema/base.schema';
+import { Publishable } from 'src/base/schema/publishable';
 
-export type ProductDocument = Product & Document;
+export type ProductDocument = Product & Document & Publishable;
 
 @Schema({ timestamps: true })
+@Publishable()
 export class Product extends BaseSchema {
   @Prop({ required: true })
   name: string;
