@@ -104,7 +104,7 @@ export class TicketTypesService {
       }
 
       const target = await this.ticketTypeModel.findOne({
-        _id: cleanedData.followUpSalesAfter,
+        code: cleanedData.followUpSalesAfter,
         productCode,
       });
   
