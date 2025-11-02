@@ -2,8 +2,8 @@
 # 🌐 Base URL Configuration
 # ===============================
 @baseUrl = http://localhost:4000
-@productCode = SP000007
-@ticketTypeId = ebfb2898-ac97-4e00-9241-e730c64ce394
+@productCode = PASS1235
+@ttCode = 1234
 # ===============================
 # 🟢 Create a new Ticket Type
 # ===============================
@@ -11,9 +11,9 @@ POST {{baseUrl}}/{{productCode}}/ticket-types
 Content-Type: application/json
 
 {
-  "code": "1234",
+  "code": "{{ttCode}}",
   "name": "VIP Ticket",
-  "category": "A126",
+  "category": "JPPP",
   "price": 150,
   "minQty": 5,
   "maxQty": 10,
@@ -32,24 +32,16 @@ GET {{baseUrl}}/{{productCode}}/ticket-types
 # ===============================
 # 📄 Get a single Ticket Type
 # ===============================
-GET {{baseUrl}}/{{productCode}}/ticket-types/{{ticketTypeId}}
+GET {{baseUrl}}/{{productCode}}/ticket-types/{{ttCode}}
 ####
 # ===============================
 # ✏️ Update a Ticket Type
 # ===============================
-PUT {{baseUrl}}/{{productCode}}/ticket-types/{{ticketTypeId}}
+PUT {{baseUrl}}/{{productCode}}/ticket-types/{{ttCode}}
 Content-Type: application/json
 
-{
-  "name": "VIP Ticket Updated",
-  "price": 0,
-  "minQty": 2,
-  "maxQty": 12,
-  "quota": 150,
-  "complimentary": true,
-  "expiryRelative": null,
-  "expirySpecific": null
-}
+{"maxQty":12,"complimentary":true,"expiryRelative":1,"minQty":5}
+
 
 ####
 # ===============================

@@ -35,44 +35,44 @@ export class TicketTypesController {
   }
 
   // Get a single ticket type by ID
-  @Get(':id')
+  @Get(':code')
   async findOne(
     @Param('productCode') productCode: string,
-    @Param('id') id: string,
+    @Param('code') code: string,
   ) {
-    return this.service.findOne(id, productCode);
+    return this.service.findOne(code, productCode);
   }
 
   // Update a ticket type
-  @Put(':id')
+  @Put(':code')
   async update(
     @Param('productCode') productCode: string,
-    @Param('id') id: string,
+    @Param('code') code: string,
     @Body() dto: UpdateTicketTypeDto,
   ) {
-    return this.service.update(id, productCode, dto);
+    return this.service.update(code, productCode, dto);
   }
 
 
-  @Patch(':id/sales')
+  @Patch(':code/sales')
   async patchSales(
     @Param('productCode') productCode: string,
-    @Param('id') id: string,
+    @Param('code') code: string,
     @Body() patchDto: PatchTicketTypesDto,
   ) {
 
     if (!patchDto.body || !patchDto.body.length) {
       throw new BadRequestException('Body must contain at least one sales item');
     }
-    const ticketTypes = await this.service.patchSales(productCode, id, patchDto.body);
+    const ticketTypes = await this.service.patchSales(productCode, code, patchDto.body);
     return ticketTypes
   }
   // Delete a ticket type
-  @Delete(':id')
+  @Delete(':code')
   async remove(
     @Param('productCode') productCode: string,
-    @Param('id') id: string,
+    @Param('code') code: string,
   ) {
-    return this.service.remove(id, productCode);
+    return this.service.remove(code, productCode);
   }
 }

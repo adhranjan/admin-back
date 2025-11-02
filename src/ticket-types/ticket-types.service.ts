@@ -25,6 +25,7 @@ export class TicketTypesService {
   // Create a new ticket type
   async create(dto: CreateTicketTypeDto & { productCode: string }): Promise<TicketType> {
     // Ensure product exists
+    // make sure 1:1 TODO
     const product = await this.productModel.findOne({
       code:dto.productCode
     });
@@ -48,23 +49,23 @@ export class TicketTypesService {
   }
 
   // Find a single ticket type by ID and productCode
-  async findOne(id: string, productCode: string): Promise<TicketType> {
-    const ticket = await this.ticketTypeModel.findOne({ _id: id, productCode });
+  async findOne(code: string, productCode: string): Promise<TicketType> {
+    const ticket = await this.ticketTypeModel.findOne({ code, productCode });
     if (!ticket) throw new NotFoundException('Ticket type not found');
     return ticket;
   }
 
   // Update a ticket type
-  async update(id: string, productCode: string, updateDto: UpdateTicketTypeDto): Promise<TicketType> {
+  async update(code: string, productCode: string, updateDto: UpdateTicketTypeDto): Promise<TicketType> {
     const ticketTypeConfig = await this.ticketTypeModel.findOne(
-      { _id: id, productCode },
+      { code, productCode },
     );
 
     if (!ticketTypeConfig) throw new NotFoundException('Ticket type not found');
 
     const cleanDto = await this.prepareTicketTypeData(productCode, updateDto, ticketTypeConfig.code);
     const updated = await this.ticketTypeModel.findOneAndUpdate(
-      { _id: id, productCode },
+      { _id: ticketTypeConfig._id },
       cleanDto,
       { new: true },
     );
@@ -74,9 +75,9 @@ export class TicketTypesService {
   }
 
   // Delete a ticket type
-  async remove(id: string, productCode: string): Promise<TicketType> {
+  async remove(code: string, productCode: string): Promise<TicketType> {
     const ticketType = await this.ticketTypeModel.findOne({
-      _id: id, productCode: productCode
+      code, productCode: productCode
     }).exec();
     if (!ticketType) throw new NotFoundException('Ticket Type not found');
     
@@ -84,7 +85,7 @@ export class TicketTypesService {
       throw new BadRequestException('Only Draft Sales Period can be deleted.');
     }  
     return await this.ticketTypeModel.findOneAndUpdate(
-      { _id: id},
+      { _id: ticketType._id},
       { $set: { status: BASE_STATUS.deleted} },
       { new: true , upsert: true}
     ).exec();
@@ -130,10 +131,10 @@ export class TicketTypesService {
     return cleanedData;
   }
 
-  async patchSales(productCode: string, id: string, items: PatchItemDto[]) {
+  async patchSales(productCode: string, code: string, items: PatchItemDto[]) {
     // Get current ticket with sales
-    const ticket = await this.ticketTypeModel.findOne({ productCode, _id: id }).lean();
-    if (!ticket) throw new NotFoundException('Ticket type not found');
+    const ticketType = await this.ticketTypeModel.findOne({ productCode, code }).lean();
+    if (!ticketType) throw new NotFoundException('Ticket type not found');
 
     const channelCodes = [...new Set(items.map(i => i.sales?.channelCode).filter(Boolean))];
     const periodIds = [...new Set(items.map(i => i.sales?.salesPeriodId).filter(Boolean))];
@@ -154,14 +155,14 @@ export class TicketTypesService {
       _id: {
         $in: periodIds
       },
-      productCode: ticket.productCode
+      productCode: ticketType.productCode
     });
     if (periodPresence !== periodIds.length) {
       throw new NotFoundException('Some sales periods do not exist');
     }
   
     // Clone existing sales array
-    let updatedSales = [...(ticket.sales as TicketType['sales'] || []).map(s => ({ ...s }))];
+    let updatedSales = [...(ticketType.sales as TicketType['sales'] || []).map(s => ({ ...s }))];
     
     for (const item of items) {
       const { action, sales } = item;
@@ -194,7 +195,7 @@ export class TicketTypesService {
     }
 
     return await this.ticketTypeModel.findOneAndUpdate(
-      { _id: id},
+      { _id: ticketType._id},
       { $set: { sales: updatedSales} },
       { new: true , upsert: true}
     ).exec();
