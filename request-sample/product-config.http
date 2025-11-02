@@ -8,10 +8,10 @@ Content-Type: application/json
 
 {
   "name": "Sample Product",
-  "code": "SP000007",
-  "currency": "USD",
+  "code": "PASS1235",
+  "currency": "NPS",
   "timeZone": "America/New_York",
-  "type": "event"
+  "type": "Pass"
 }
 
 ### Update a product

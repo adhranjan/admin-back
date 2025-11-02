@@ -1,4 +1,5 @@
-import { IsString, Length } from 'class-validator';
+import { IsIn, IsString, Length } from 'class-validator';
+import { PRODUCT_TYPE } from '../products.constants';
 
 export class CreateProductDto {
   @IsString()
@@ -15,5 +16,6 @@ export class CreateProductDto {
   timeZone: string;
 
   @IsString()
+  @IsIn([PRODUCT_TYPE.EVENT, PRODUCT_TYPE.PASS], { message: `Only ${PRODUCT_TYPE.EVENT} and ${PRODUCT_TYPE.PASS} are supported.` })
   type: string;
 }

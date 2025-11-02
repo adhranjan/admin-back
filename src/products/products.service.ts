@@ -5,7 +5,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product, ProductDocument } from './product.schema';
 import { randomBytes } from 'crypto';
-
+import {FilterQuery} from 'mongoose'
 @Injectable()
 export class ProductsService {
   constructor(
@@ -22,8 +22,8 @@ export class ProductsService {
     return created;
   }
 
-  findAll() {
-    return this.productModel.find().exec();
+  findAll(query: FilterQuery<Product>) {
+    return this.productModel.find(query).exec();
   }
 
   findOne(code: string) {
