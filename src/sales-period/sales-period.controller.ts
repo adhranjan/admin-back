@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, ParseIntPipe, Put } from '@nestjs/common';
 import { SalesPeriodService } from './sales-period.service';
 import { CreateSalesPeriodDto } from './dto/create-sales-period.dto';
 import { UpdateSalesPeriodDto } from './dto/update-sales-period.dto';
@@ -29,7 +29,7 @@ export class SalesPeriodController {
     return this.service.findOne(id, productCode);
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(
     @Param('productCode') productCode: string,
     @Param('id') id: string,
