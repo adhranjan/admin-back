@@ -28,9 +28,29 @@ export class BaseSchema {
 // Mongoose plugin function for auto-updating timestamps
 export function BaseSchemaPlugin(schema: MongooseSchema) {
     schema.pre('save', function (next) {
-      const now = new Date();
       if (!this.createdBy) this.createdBy = 'system';
       this.updatedBy = 'system';
       next();
-    });
+    });    
   }
+
+
+export function IgnoreDeletedPlugin(schema: MongooseSchema) {
+  // Intercept find, findOne, findOneAndUpdate, count, etc.
+  const preQuery = function (next: any) {
+    // `this` is the query object
+    this.where({ status: { $ne: -1 } });
+    next();
+  };
+
+  schema.pre('find', preQuery);
+  schema.pre('findOne', preQuery);
+  schema.pre('findOneAndUpdate', preQuery);
+  // schema.pre('getEs', preQuery);
+  schema.pre('countDocuments', preQuery);
+  schema.pre('aggregate', function (next: any) {
+    // For aggregate pipelines, inject a match stage
+    this.pipeline().unshift({ $match: { status: { $ne: -1 } } });
+    next();
+  });
+}

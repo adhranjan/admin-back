@@ -35,12 +35,12 @@ export class ChannelService {
   /**
    * UPDATE: validates if record exists
    */
-  async update(id: string, updateChannelDto: UpdateChannelDto): Promise<ChannelDocument> {
-    const existing = await this.channelModel.findById(id).exec();
+  async update(code: string, updateChannelDto: UpdateChannelDto): Promise<ChannelDocument> {
+    const existing = await this.channelModel.findOne({code}).exec();
     if (!existing) {
-      throw new NotFoundException(`Channel with id ${id} not found`);
+      throw new NotFoundException(`Channel with code ${code} not found`);
     }
-    const updated = await this.channelModel.findOneAndUpdate({_id: id}, {
+    const updated = await this.channelModel.findOneAndUpdate({code: code}, {
       $set: updateChannelDto
     }, {
       upsert: true,
@@ -50,7 +50,7 @@ export class ChannelService {
     return updated;
   }
 
-  findOne(id: string) {
-    return this.channelModel.findById(id).exec();
+  findOne(code: string) {
+    return this.channelModel.findOne({code}).exec();
   }
 }

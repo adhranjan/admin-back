@@ -12,11 +12,10 @@ export class ChannelController {
     return this.channelsService.create(dto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.channelsService.findOne(id);
+  @Get(':code')
+  findOne(@Param('code') code: string) {
+    return this.channelsService.findOne(code);
   }
-
 
 
   @Get()
@@ -24,8 +23,8 @@ export class ChannelController {
     return this.channelsService.findAll();
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateChannelDto) {
-    return this.channelsService.update(id, dto);
+  @Put(':code')
+  update(@Param('code') code: string, @Body() dto: UpdateChannelDto) {
+    return this.channelsService.update(code, dto);
   }
 }

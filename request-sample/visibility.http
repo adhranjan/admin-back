@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:4000
 @productCode = SP000007
 @visibilityId = 5601115d-e0c1-4468-8f47-ed27fc7a8495
-@channelCode = MAINPOOS
+@channelCode = PORTAL00
 
 ### =========================
 ### CREATE VISIBILITY

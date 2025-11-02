@@ -6,9 +6,9 @@ POST {{baseUrl}}/channels
 Content-Type: application/json
 
 {
-  "name": "Main POS",
-  "code": "MAINPOOS",
-  "type": "POS",
+  "name": "SUB PORTAL",
+  "code": "PORTAL02",
+  "type": "PORTAL",
   "country": "Nepal"
 }
 
