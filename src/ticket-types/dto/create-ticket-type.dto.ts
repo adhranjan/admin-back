@@ -27,6 +27,7 @@ export class CreateTicketTypeDto {
   maxQty: number;
 
   @IsNumber()
+  @IsOptional()   // skips validation if value is undefined or null
   quota: number;
 
   @IsString()

@@ -26,7 +26,7 @@ export class TicketType extends BaseSchema {
   @Prop()
   maxQty?: number;
 
-  @Prop({ required: true })
+  @Prop({ default: null })
   quota: number;
 
   @Prop({ default: null })
