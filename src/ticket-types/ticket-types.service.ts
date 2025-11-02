@@ -114,8 +114,8 @@ export class TicketTypesService {
         );
       }
     }
-    const hasRelative = 'expiryRelative' in cleanedData && cleanedData.expiryRelative !== null;
-    const hasSpecific = 'expirySpecific' in cleanedData && cleanedData.expirySpecific !== null;
+    const hasRelative = 'expiryRelative' in cleanedData && cleanedData.expiryRelative != null;
+    const hasSpecific = 'expirySpecific' in cleanedData && cleanedData.expirySpecific != null;
   
     if (hasRelative && hasSpecific) {
       throw new BadRequestException(
